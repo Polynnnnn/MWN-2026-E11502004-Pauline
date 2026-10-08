@@ -47,3 +47,32 @@ I used AI to help me write a custom ns-3 script to simulate this behavior. The s
 1. Using the `LogNormalRandomVariable` object in ns-3 to calculate the packet sizes.
 2. Fragmenting the packets if they are too big for a single transmission.
 3. Scheduling the UDP transmission exactly every **16 ms** to match the 3GPP model.
+
+---
+
+## 3. The Code and the Command
+
+* **The Source Code:** My code file is named `xr-traffic-sim.cc`. 
+* **The Run Command:** To run my own custom simulation, I typed this into my terminal:
+
+  ```bash
+  ./ns3 run scratch/xr-traffic-sim
+  ```
+
+---
+
+## 4. Proof of My Simulation
+
+### Wireshark Capture 
+The Wireshark image below shows my `.pcap` file. You can clearly see that:
+* My starting computer (IP address `10.1.1.1`) successfully sent data packets (UDP protocol).
+* My receiving computer (IP address `10.1.1.2`) successfully received them. 
+* **Conclusion:** The connection worked perfectly.
+
+
+### The Graphs (Math Proof)
+I also asked the AI to write a short Python script. This script analyzed all the results from my simulation to draw these graphs:
+
+* **Top graphs (Packet size):** You can see an asymmetrical bell-shaped curve (blue and red). This proves that my code correctly applies the size variations required by the 3GPP standard (the **Log-Normal curve**).
+* **Bottom graphs (The timing):** You can see a single, straight vertical line (green and purple) planted exactly at zero (which corresponds to **16 ms**). This proves there is no delay: the images are sent with absolute precision to guarantee a steady **60 frames per second (FPS)**.
+
