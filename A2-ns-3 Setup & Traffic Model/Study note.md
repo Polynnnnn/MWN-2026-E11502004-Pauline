@@ -60,7 +60,7 @@ To prove that the simulation actually ran, I enabled network recording. The Wire
 
 **Conclusion:** The connection worked perfectly.
 
-
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/e51fbddd-3aec-4ea2-9197-71be9e334a45" />
 
 ### The Graphs (Math Proof)
 
