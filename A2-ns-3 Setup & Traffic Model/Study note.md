@@ -77,3 +77,4 @@ I also asked the AI to write a short Python script. This script analyzed all the
 * **Top graphs (Packet size):** You can see an asymmetrical bell-shaped curve (blue and red). This proves that my code correctly applies the size variations required by the 3GPP standard (the **Log-Normal curve**).
 * **Bottom graphs (The timing):** You can see a single, straight vertical line (green and purple) planted exactly at zero (which corresponds to **16 ms**). This proves there is no delay: the images are sent with absolute precision to guarantee a steady **60 frames per second (FPS)**.
 
+<img width="884" height="636" alt="image" src="https://github.com/user-attachments/assets/34bf08ab-abf4-4a4d-8234-4782c0a1335a" />
