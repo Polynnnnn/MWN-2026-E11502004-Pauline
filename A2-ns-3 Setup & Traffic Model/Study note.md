@@ -69,6 +69,7 @@ The Wireshark image below shows my `.pcap` file. You can clearly see that:
 * My receiving computer (IP address `10.1.1.2`) successfully received them. 
 * **Conclusion:** The connection worked perfectly.
 
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/04742ee0-ee8d-4113-ad57-d43063f0525f" />
 
 ### The Graphs (Math Proof)
 I also asked the AI to write a short Python script. This script analyzed all the results from my simulation to draw these graphs:
