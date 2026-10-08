@@ -43,7 +43,7 @@ I used AI to help me write a custom ns-3 script to simulate this behavior. The s
 
 ## 3. The Code and the Command
 
-* **The Source Code:** My code file is named `xr-traffic-sim.cc`. In ns-3, it **must** be placed inside the `scratch/` folder so the software can read it.
+* **The Source Code:** My code file is named `xr-traffic-sim.cc`. 
 * **The Run Command:** To run my own custom simulation, I typed this into my terminal:
   ```bash
   ./ns3 run scratch/xr-traffic-sim
@@ -53,7 +53,7 @@ I used AI to help me write a custom ns-3 script to simulate this behavior. The s
 
 ### Wireshark Capture (Network Proof)
 
-To prove that the simulation actually ran, I enabled network recording. The Wireshark image below shows my `.pcap` file. You can clearly see that:
+The Wireshark image below shows my `.pcap` file. You can clearly see that:
 
 * My starting computer (IP address `10.1.1.1`) successfully sent data packets (UDP protocol).
 * My receiving computer (IP address `10.1.1.2`) successfully received them.
@@ -66,5 +66,7 @@ To prove that the simulation actually ran, I enabled network recording. The Wire
 
 I also asked the AI to write a short Python script. This script analyzed all the results from my simulation to draw these graphs:
 
-* **Top graphs (Packet size):** You can see a bell-shaped curve (blue and red). This proves that my code correctly applies the size variations required by the 3GPP standard (the **truncated Gaussian distribution**).
-* **Bottom graphs (The timing):** You can see a single, straight vertical line (green and purple) planted exactly at zero (which corresponds to **16 ms**). This proves there is no delay: the images are sent with absolute precision to guarantee a steady **60 frames per second (FPS)**.
+* **Top graphs (Packet size):** We can see a bell-shaped curve (blue and red). This proves that my code correctly applies the size variations required by the 3GPP standard (the **truncated Gaussian distribution**).
+* **Bottom graphs (The timing):** We can see a single, straight vertical line (green and purple) planted exactly at zero (which corresponds to **16 ms**). This proves there is no delay: the images are sent with absolute precision to guarantee a steady **60 frames per second (FPS)**.
+
+<img width="884" height="636" alt="image" src="https://github.com/user-attachments/assets/34bf08ab-abf4-4a4d-8234-4782c0a1335a" />
