@@ -1,0 +1,80 @@
+#include "ns3/core-module.h"
+#include "ns3/network-module.h"
+#include "ns3/internet-module.h"
+#include "ns3/point-to-point-module.h"
+#include "ns3/applications-module.h"
+#include <fstream>
+
+using namespace ns3;
+
+std::ofstream g_logFile;
+
+static void GenerateXrFrame(Ptr<Socket> socket, Ptr<LogNormalRandomVariable> sizeGen, Time frameInterval)
+{
+    double frameSizeD = sizeGen->GetValue();
+    uint32_t frameSize = std::max((uint32_t)frameSizeD, (uint32_t)1000);
+    
+    g_logFile << Simulator::Now().GetSeconds() << "," << frameSize << std::endl;
+
+    uint32_t packetSize = 1400;
+    uint32_t bytesLeft = frameSize;
+    
+    while (bytesLeft > 0) {
+        uint32_t currentSize = std::min(packetSize, bytesLeft);
+        Ptr<Packet> packet = Create<Packet>(currentSize);
+        socket->Send(packet);
+        bytesLeft -= currentSize;
+    }
+
+    Simulator::Schedule(frameInterval, &GenerateXrFrame, socket, sizeGen, frameInterval);
+}
+
+int main(int argc, char *argv[])
+{
+    g_logFile.open("xr_traffic_log.csv");
+    g_logFile << "Time,FrameSize" << std::endl;
+
+    NodeContainer nodes;
+    nodes.Create(2);
+
+    PointToPointHelper pointToPoint;
+    pointToPoint.SetDeviceAttribute("DataRate", StringValue("100Mbps"));
+    pointToPoint.SetChannelAttribute("Delay", StringValue("2ms"));
+
+    NetDeviceContainer devices = pointToPoint.Install(nodes);
+    InternetStackHelper stack;
+    stack.Install(nodes);
+
+    Ipv4AddressHelper address;
+    address.SetBase("10.1.1.0", "255.255.255.0");
+    
+    // CORRECTION : C'est Assign() et non Install() !
+    Ipv4InterfaceContainer interfaces = address.Assign(devices);
+
+    uint16_t port = 9000;
+    Address sinkAddress(InetSocketAddress(interfaces.GetAddress(1), port));
+    PacketSinkHelper packetSinkHelper("ns3::UdpSocketFactory", sinkAddress);
+    ApplicationContainer sinkApps = packetSinkHelper.Install(nodes.Get(1));
+    sinkApps.Start(Seconds(0.0));
+    sinkApps.Stop(Seconds(10.0));
+
+    Ptr<Socket> sourceSocket = Socket::CreateSocket(nodes.Get(0), UdpSocketFactory::GetTypeId());
+    sourceSocket->Connect(sinkAddress);
+
+    Ptr<LogNormalRandomVariable> frameSizeGen = CreateObject<LogNormalRandomVariable>();
+    frameSizeGen->SetAttribute("Mu", DoubleValue(9.5));
+    frameSizeGen->SetAttribute("Sigma", DoubleValue(0.5));
+    
+    Time frameInterval = MilliSeconds(16);
+
+    Simulator::Schedule(Seconds(1.0), &GenerateXrFrame, sourceSocket, frameSizeGen, frameInterval);
+
+    pointToPoint.EnablePcapAll("xr-simulation");
+
+    Simulator::Stop(Seconds(10.0));
+    Simulator::Run();
+    
+    g_logFile.close();
+    Simulator::Destroy();
+    return 0;
+}
