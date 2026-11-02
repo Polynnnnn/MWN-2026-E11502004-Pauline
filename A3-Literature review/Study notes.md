@@ -57,3 +57,17 @@ Here are the final average throughput values (in Mbps) that I got from my ns-3 r
 | **16** | 6.4255 Mbps | 5.6523 Mbps | 0.0815 Mbps | 0.0458 Mbps |
 
 ---
+## 4. Analysis
+
+**I successfully reproduced Figure 9 from the paper** 
+
+My graph matches the curves and behavior described by Mangold et al. perfectly:
+
+1. **Light Network Load ($N = 1$ to $N = 2$):** 
+   - When there are only 1 or 2 stations, the network is not crowded. Everyone gets 100% of their data through (~1 Mbps per stream).
+2. **First Starvation — Background Traffic ($N = 3$):** 
+   - As soon as we reach 3 stations, **AC_BK** (Background traffic) drops down to 0.91 Mbps. Because it has a larger waiting time ($AIFSN = 7$), it gets pushed aside by higher priority traffic.
+3. **Second Starvation — Best Effort Traffic ($N = 4$):** 
+   - At 4 stations, **AC_BE** drops sharply to 1.32 Mbps, and by 5 stations it drops below 0.4 Mbps.
+4. **Dominance of High Priority Traffic ($N \ge 6$):** 
+   - When the network becomes dense ($N = 6$ to $16$), **Voice (AC_VO)** and **Video (AC_VI)** completely take over the Wi-Fi network (holding around 6.4 Mbps and 5.6 Mbps each). **Best Effort** and **Background** traffic are almost completely starved (getting less than 0.1 Mbps).
