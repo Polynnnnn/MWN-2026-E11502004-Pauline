@@ -71,3 +71,8 @@ My graph matches the curves and behavior described by Mangold et al. perfectly:
    - At 4 stations, **AC_BE** drops sharply to 1.32 Mbps, and by 5 stations it drops below 0.4 Mbps.
 4. **Dominance of High Priority Traffic ($N \ge 6$):** 
    - When the network becomes dense ($N = 6$ to $16$), **Voice (AC_VO)** and **Video (AC_VI)** completely take over the Wi-Fi network (holding around 6.4 Mbps and 5.6 Mbps each). **Best Effort** and **Background** traffic are almost completely starved (getting less than 0.1 Mbps).
+
+### Small Differences & Explanations:
+- The total combined throughput of the network levels off at around **12.1 Mbps** in my simulation. This is completely expected because 802.11a at 24 Mbps PHY speed has overhead costs (like packet headers, ACKs, and guard intervals) in ns-3.48.
+
+---
