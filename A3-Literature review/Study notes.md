@@ -27,4 +27,17 @@ To get these results, I set up a custom simulation script in **ns-3.48**. Here i
 - Initially, I tried sending 250 kbps per stream, but I realized the original paper used a higher load. So, I updated my script to send **1 Mbps per stream** (meaning each station generates **4 Mbps total**).
 - Packets were set to 512 bytes, sent using UDP.
 
+### Step 3: Wi-Fi & EDCA Parameters
+- **Wi-Fi Standard:** IEEE 802.11a operating at 5 GHz.
+- **Physical Data Rate:** 24 Mbps for data frames and 6 Mbps for ACK frames.
+- **QoS Priority Rules (EDCA Settings):**
+  - **AC_VO (Voice):** Highest priority ($AIFSN = 2$, $CW_{min} = 7$, $CW_{max} = 15$)
+  - **AC_VI (Video):** High priority ($AIFSN = 2$, $CW_{min} = 15$, $CW_{max} = 31$)
+  - **AC_BE (Best Effort):** Medium priority ($AIFSN = 3$, $CW_{min} = 15$, $CW_{max} = 1023$)
+  - **AC_BK (Background):** Lowest priority ($AIFSN = 7$, $CW_{min} = 15$, $CW_{max} = 1023$)
+
+### Step 4: Running Multiple Seeds for Accuracy
+To make sure the results were reliable and accurate, I wrote a Bash script (`run_density_experiment.sh`) to run the simulation **5 times with different random seeds** for every station count ($N$). Then, I averaged the results across all 5 runs.
+
+---
 
