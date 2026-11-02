@@ -26,6 +26,26 @@ This figure shows what happens to the throughput (data speed) of four different 
 
 ## 2. What I Did (Setup & Simulation Steps)
 
+### 1. Environment
+- **Network Topology:** Infrastructure QoS Basic Service Set (QBSS) consisting of 1 Access Point (AP / Hybrid Coordinator) and $N$ contending stations ($N \in \{1, 2, 3, \dots, 16\}$).
+- **Radio Propagation:** All stations are placed in close spatial proximity to the AP (5 meters) within single-hop range, ensuring no hidden node problems exist.
+
+### 2. Inputs
+- **Station Density ($N$):** Varied from 1 to 16 stations.
+- **Traffic Model per Station:** Each station generates 4 concurrent UDP traffic streams corresponding to the four Access Categories ($AC\_VO, AC\_VI, AC\_BE, AC\_BK$).
+- **Offered Rate per Stream:** $1.0\text{ Mbps}$ per AC (total offered load of $4.0\text{ Mbps}$ per station across all 4 streams).
+- **Packet Size:** 512-byte MSDUs (UDP).
+- **PHY/MAC Settings:**
+  - Physical Layer: IEEE 802.11a operating at 5 GHz.
+  - Transmission Rates: 24 Mbps for data frames, 6 Mbps for control/ACK frames.
+  - EDCA Parameters ($AIFSN$, $CW_{min}$, $CW_{max}$, $TXOP_{limit}$) set strictly according to Table 1 of Mangold et al.
+
+### 3. Outputs & Performance Metrics
+- **Measured Output:** Aggregate throughput per Access Category received and measured at the AP application layer sinks over a 10-second simulation period.
+- **Performance Metric:** Throughput per AC ($\text{Mbps}$) plotted as a function of station count $N$.
+
+---
+
 To get these results, I set up a custom simulation script in **ns-3.48**. Here is how I set everything up:
 
 ### Step 1: Network Topology & Distance
