@@ -79,13 +79,13 @@ My graph matches the curves and behavior described by Mangold et al. perfectly:
 
 ```mermaid
 xychart-beta
-    title "Throughput per AC vs Station Count"
+    title "Saturated EDCA Throughput per AC vs Station Count"
     x-axis [N=1, N=2, N=3, N=4, N=5, N=6, N=7, N=8, N=9, N=10, N=11, N=12, N=14, N=16]
-    y-axis "Throughput (Mbps)" 0 --> 7
-    line "AC_VO (Voice)" [1.00, 2.00, 3.00, 3.99, 4.92, 5.76, 6.11, 6.28, 6.50, 6.32, 6.26, 6.15, 6.20, 6.43]
-    line "AC_VI (Video)" [1.00, 2.00, 3.00, 3.99, 4.92, 5.78, 5.61, 5.75, 5.64, 5.71, 5.55, 5.73, 5.48, 5.65]
-    line "AC_BE (Best Effort)" [1.00, 2.00, 3.00, 1.32, 0.37, 0.32, 0.23, 0.19, 0.14, 0.14, 0.14, 0.22, 0.14, 0.08]
-    line "AC_BK (Background)" [1.00, 2.00, 0.91, 0.31, 0.17, 0.16, 0.12, 0.11, 0.08, 0.07, 0.08, 0.11, 0.08, 0.05]
+    y-axis "Throughput (Mbps)" 0 --> 12
+    line "AC_VO (Voice)" [10.60, 9.19, 9.15, 9.10, 8.47, 8.14, 8.17, 7.91, 8.00, 7.96, 8.10, 7.58, 8.58, 8.25]
+    line "AC_VI (Video)" [5.19, 6.13, 5.99, 5.95, 6.15, 6.00, 6.22, 6.07, 6.06, 6.08, 6.09, 5.97, 5.85, 6.20]
+    line "AC_BE (Best Effort)" [0.01, 0.01, 0.02, 0.01, 0.01, 0.07, 0.02, 0.07, 0.08, 0.05, 0.08, 0.12, 0.03, 0.02]
+    line "AC_BK (Background)" [0.00, 0.00, 0.00, 0.00, 0.00, 0.02, 0.01, 0.02, 0.03, 0.04, 0.03, 0.04, 0.00, 0.00]
 ```
 
 ---
