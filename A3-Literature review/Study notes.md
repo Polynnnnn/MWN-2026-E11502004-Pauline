@@ -40,6 +40,7 @@ To get these results, I set up a custom simulation script in **ns-3.48**. Here i
 To make sure the results were reliable and accurate, I wrote a Bash script (`run_density_experiment.sh`) to run the simulation **5 times with different random seeds** for every station count ($N$). Then, I averaged the results across all 5 runs.
 
 ---
+
 ## 3. My Simulation Results
 
 Here are the final average throughput values (in Mbps) that I got from my ns-3 runs:
@@ -57,6 +58,7 @@ Here are the final average throughput values (in Mbps) that I got from my ns-3 r
 | **16** | 6.4255 Mbps | 5.6523 Mbps | 0.0815 Mbps | 0.0458 Mbps |
 
 ---
+
 ## 4. Analysis
 
 **I successfully reproduced Figure 9 from the paper** 
@@ -76,3 +78,9 @@ My graph matches the curves and behavior described by Mangold et al. perfectly:
 - The total combined throughput of the network levels off at around **12.1 Mbps** in my simulation. This is completely expected because 802.11a at 24 Mbps PHY speed has overhead costs (like packet headers, ACKs, and guard intervals) in ns-3.48.
 
 ---
+
+## 5. Summary & Conclusion
+
+Through this assignment, I successfully implemented the 802.11e EDCA protocol parameters in ns-3.48, automated a station density sweep across multiple random seeds, plotted the output, and verified that **high network density starves low-priority traffic while protecting voice and video**. 
+
+This reproduced curve now serves as my solid **baseline** for the final project.
