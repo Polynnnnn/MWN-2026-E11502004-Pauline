@@ -22,4 +22,9 @@ To get these results, I set up a custom simulation script in **ns-3.48**. Here i
 - I created 1 Access Point (AP) and tested it with $N$ stations (where $N = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16$).
 - I placed all stations close to the AP so that every station could "hear" the others (no hidden node problems).
 
+### Step 2: Traffic Profile & Rates
+- Each station sends **4 different data streams** at the same time (one for each QoS priority level).
+- Initially, I tried sending 250 kbps per stream, but I realized the original paper used a higher load. So, I updated my script to send **1 Mbps per stream** (meaning each station generates **4 Mbps total**).
+- Packets were set to 512 bytes, sent using UDP.
+
 
