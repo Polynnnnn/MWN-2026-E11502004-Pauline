@@ -29,12 +29,12 @@ To get these results, I set up a custom simulation script in **ns-3.48**. Here i
 
 ### Step 3: Wi-Fi & EDCA Parameters
 - **Wi-Fi Standard:** IEEE 802.11a operating at 5 GHz.
-- **Physical Data Rate:** 24 Mbps for data frames and 6 Mbps for ACK frames.
-- **QoS Priority Rules (EDCA Settings):**
-  - **AC_VO (Voice):** Highest priority ($AIFSN = 2$, $CW_{min} = 7$, $CW_{max} = 15$)
-  - **AC_VI (Video):** High priority ($AIFSN = 2$, $CW_{min} = 15$, $CW_{max} = 31$)
-  - **AC_BE (Best Effort):** Medium priority ($AIFSN = 3$, $CW_{min} = 15$, $CW_{max} = 1023$)
-  - **AC_BK (Background):** Lowest priority ($AIFSN = 7$, $CW_{min} = 15$, $CW_{max} = 1023$)
+- **Physical Data Rate:** 24 Mbps for data frames and 6 Mbps for control frames.
+- **QoS Priority Rules (EDCA Settings from Table 1 of the paper):**
+  - **$AC\_VO$ (Voice):** $AIFSN = 2$, $CW_{min} = 3$, $CW_{max} = 7$, $TXOP_{limit} = 0\text{ ms}$
+  - **$AC\_VI$ (Video):** $AIFSN = 2$, $CW_{min} = 7$, $CW_{max} = 15$, $TXOP_{limit} = 0\text{ ms}$
+  - **$AC\_BE$ (Best Effort):** $AIFSN = 3$, $CW_{min} = 15$, $CW_{max} = 1023$, $TXOP_{limit} = 0\text{ ms}$
+  - **$AC\_BK$ (Background):** $AIFSN = 7$, $CW_{min} = 15$, $CW_{max} = 1023$, $TXOP_{limit} = 0\text{ ms}$
 
 ### Step 4: Running Multiple Seeds for Accuracy
 To make sure the results were reliable and accurate, I wrote a Bash script (`run_density_experiment.sh`) to run the simulation **5 times with different random seeds** for every station count ($N$). Then, I averaged the results across all 5 runs.
