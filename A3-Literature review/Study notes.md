@@ -43,19 +43,24 @@ To make sure the results were reliable and accurate, I wrote a Bash script (`run
 
 ## 3. My Simulation Results
 
-Here are the final average throughput values (in Mbps) that I got from my ns-3 runs:
+Here are the exact throughput values (in Mbps) measured at the AP sink applications across 10 seconds of simulation time:
 
-| Stations ($N$) | AC_VO (Voice) | AC_VI (Video) | AC_BE (Best Effort) | AC_BK (Background) |
+| Stations ($N$) | $AC\_VO$ (Voice) | $AC\_VI$ (Video) | $AC\_BE$ (Best Effort) | $AC\_BK$ (Background) |
 | :---: | :---: | :---: | :---: | :---: |
-| **1** | 0.9992 Mbps | 0.9992 Mbps | 0.9992 Mbps | 0.9989 Mbps |
-| **2** | 1.9991 Mbps | 1.9991 Mbps | 1.9990 Mbps | 1.9986 Mbps |
-| **3** | 2.9985 Mbps | 2.9986 Mbps | 2.9992 Mbps | **0.9110 Mbps** |
-| **4** | 3.9907 Mbps | 3.9887 Mbps | **1.3191 Mbps** | 0.3143 Mbps |
-| **5** | 4.9206 Mbps | 4.9146 Mbps | 0.3716 Mbps | 0.1687 Mbps |
-| **6** | 5.7573 Mbps | 5.7820 Mbps | 0.3207 Mbps | 0.1608 Mbps |
-| **8** | 6.2817 Mbps | 5.7496 Mbps | 0.1943 Mbps | 0.1095 Mbps |
-| **12** | 6.1534 Mbps | 5.7312 Mbps | 0.2238 Mbps | 0.1116 Mbps |
-| **16** | 6.4255 Mbps | 5.6523 Mbps | 0.0815 Mbps | 0.0458 Mbps |
+| **1** | 0.9994 Mbps | 0.9994 Mbps | 0.9994 Mbps | 0.9985 Mbps |
+| **2** | 1.9989 Mbps | 1.9979 Mbps | 1.9979 Mbps | 1.9970 Mbps |
+| **3** | 2.8654 Mbps | 2.8576 Mbps | 2.8495 Mbps | 2.8308 Mbps |
+| **4** | 3.3929 Mbps | 3.1080 Mbps | 2.6579 Mbps | 2.1258 Mbps |
+| **5** | 3.7761 Mbps | 3.1881 Mbps | 2.4444 Mbps | 1.6885 Mbps |
+| **6** | 4.1456 Mbps | 3.2600 Mbps | 2.2492 Mbps | 1.3699 Mbps |
+| **7** | 4.3609 Mbps | 3.2622 Mbps | 2.1081 Mbps | 1.1860 Mbps |
+| **8** | 4.5852 Mbps | 3.2340 Mbps | 1.9511 Mbps | 1.0199 Mbps |
+| **9** | 4.7086 Mbps | 3.2186 Mbps | 1.8446 Mbps | 0.9202 Mbps |
+| **10** | 4.8738 Mbps | 3.1462 Mbps | 1.7089 Mbps | 0.8288 Mbps |
+| **11** | 4.9967 Mbps | 3.1284 Mbps | 1.6134 Mbps | 0.7214 Mbps |
+| **12** | 5.0886 Mbps | 3.0756 Mbps | 1.5296 Mbps | 0.6836 Mbps |
+| **14** | 5.2110 Mbps | 3.0056 Mbps | 1.4231 Mbps | 0.6044 Mbps |
+| **16** | 5.3612 Mbps | 2.9273 Mbps | 1.3121 Mbps | 0.5184 Mbps |
 
 ---
 
@@ -84,3 +89,8 @@ My graph matches the curves and behavior described by Mangold et al. perfectly:
 Through this assignment, I successfully implemented the 802.11e EDCA protocol parameters in ns-3.48, automated a station density sweep across multiple random seeds, plotted the output, and verified that **high network density starves low-priority traffic while protecting voice and video**. 
 
 This reproduced curve now serves as my solid **baseline** for the final project.
+
+
+
+
+<img width="794" height="617" alt="image" src="https://github.com/user-attachments/assets/45b39f6e-2cdf-4edd-b297-72fd75a819b6" />
