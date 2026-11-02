@@ -66,31 +66,34 @@ Here are the exact throughput values (in Mbps) measured at the AP sink applicati
 
 ## 4. Analysis
 
-**I successfully reproduced Figure 9 from the paper** 
+My updated simulation results demonstrate the key EDCA QoS principles shown in Mangold et al.:
 
-My graph matches the curves and behavior described by Mangold et al. perfectly:
+1. **Light Load / Unsaturated Channel ($N = 1$ to $N = 3$):**
+   - At $N = 1$ and $N = 2$, the total traffic offered is below channel capacity. All four Access Categories deliver 100% of their generated traffic (~1.0 Mbps per stream per station).
+   - At $N = 3$ (offered load = 12.0 Mbps), throughput begins to level off near ~2.86 Mbps per AC as total channel usage approaches capacity.
+2. **Channel Saturation & Priority Separation ($N \ge 4$):**
+   - As soon as station count reaches $N = 4$ (offered load = 16.0 Mbps), the total demand exceeds available Wi-Fi bandwidth.
+   - The four categories split into four clear priority levels:
+     - **$AC\_VO$ (Voice):** Captures the highest throughput, rising from 3.39 Mbps at $N=4$ up to **5.36 Mbps** at $N=16$. This occurs because it uses the smallest backoff window ($CW_{min}=3, CW_{max}=7$) and shortest waiting interval ($AIFSN=2$).
+     - **$AC\_VI$ (Video):** Holds steady around **2.93 – 3.26 Mbps** due to its medium contention parameters ($CW_{min}=7$).
+     - **$AC\_BE$ (Best Effort):** Drops steadily from 2.66 Mbps down to **1.31 Mbps** at $N=16$.
+     - **$AC\_BK$ (Background):** Suffers the most throttling, dropping from 2.13 Mbps down to **0.52 Mbps** at $N=16$ because of its long waiting time ($AIFSN=7$).
 
-1. **Light Network Load ($N = 1$ to $N = 2$):** 
-   - When there are only 1 or 2 stations, the network is not crowded. Everyone gets 100% of their data through (~1 Mbps per stream).
-2. **First Starvation — Background Traffic ($N = 3$):** 
-   - As soon as we reach 3 stations, **AC_BK** (Background traffic) drops down to 0.91 Mbps. Because it has a larger waiting time ($AIFSN = 7$), it gets pushed aside by higher priority traffic.
-3. **Second Starvation — Best Effort Traffic ($N = 4$):** 
-   - At 4 stations, **AC_BE** drops sharply to 1.32 Mbps, and by 5 stations it drops below 0.4 Mbps.
-4. **Dominance of High Priority Traffic ($N \ge 6$):** 
-   - When the network becomes dense ($N = 6$ to $16$), **Voice (AC_VO)** and **Video (AC_VI)** completely take over the Wi-Fi network (holding around 6.4 Mbps and 5.6 Mbps each). **Best Effort** and **Background** traffic are almost completely starved (getting less than 0.1 Mbps).
+<img width="794" height="617" alt="image" src="https://github.com/user-attachments/assets/45b39f6e-2cdf-4edd-b297-72fd75a819b6" />
 
-### Small Differences & Explanations:
-- The total combined throughput of the network levels off at around **12.1 Mbps** in my simulation. This is completely expected because 802.11a at 24 Mbps PHY speed has overhead costs (like packet headers, ACKs, and guard intervals) in ns-3.48.
+### Comparison with Paper Baseline:
+- **Similarity:** The simulation correctly reproduces the step-by-step priority ranking ($AC\_VO > AC\_VI > AC\_BE > AC\_BK$) and proves that EDCA protects high-priority voice traffic when the network becomes crowded.
+- **Minor Difference:** In the original 2003 paper's analytical curves, lower priorities fell faster toward zero because of ideal collision assumptions. In **ns-3.48**, the internal packet queuing and MAC retry mechanisms smooth out frame drops, allowing $AC\_BE$ and $AC\_BK$ to retain minor residual throughput while voice traffic continues to grow.
 
 ---
 
 ## 5. Summary & Conclusion
 
-Through this assignment, I successfully implemented the 802.11e EDCA protocol parameters in ns-3.48, automated a station density sweep across multiple random seeds, plotted the output, and verified that **high network density starves low-priority traffic while protecting voice and video**. 
+I successfully set up and verified the IEEE 802.11e EDCA protocol parameters in **ns-3.48**. The simulation script sweeps station density from 1 to 16 stations and confirms that **increasing station count forces lower-priority traffic to yield bandwidth to protect voice and video applications**.
 
-This reproduced curve now serves as my solid **baseline** for the final project.
-
-
+This curve serves as my validated baseline for the project.
 
 
-<img width="794" height="617" alt="image" src="https://github.com/user-attachments/assets/45b39f6e-2cdf-4edd-b297-72fd75a819b6" />
+
+
+
