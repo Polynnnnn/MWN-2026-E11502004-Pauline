@@ -115,6 +115,17 @@ My updated simulation results demonstrate the key EDCA QoS principles shown in M
 - **Similarity:** The simulation correctly reproduces the step-by-step priority ranking ($AC\_VO > AC\_VI > AC\_BE > AC\_BK$) and proves that EDCA protects high-priority voice traffic when the network becomes crowded.
 - **Minor Difference:** In the original 2003 paper's analytical curves, lower priorities fell faster toward zero because of ideal collision assumptions. In **ns-3.48**, the internal packet queuing and MAC retry mechanisms smooth out frame drops, allowing $AC\_BE$ and $AC\_BK$ to retain minor residual throughput while voice traffic continues to grow.
 
+### What Changed & Why
+Based on the analysis of Mangold et al. (2003) and the reproduction of Figure 9 in ns-3.48, the scope and direction of the project proposal (A1) have been revised as follows:
+
+1. **Shift in Core Research Problem:**
+   - *Initial Plan (A1):* Focused broadly on measuring average throughput degradation as network density increases.
+   - *Revised Scope (A3):* The reproduction demonstrates that under default EDCA settings, high station density forces lower priorities ($AC\_BE, AC\_BK$) into severe throttling while high-priority traffic ($AC\_VO$) experiences high contention due to its narrow $CW_{min}=3, CW_{max}=7$ limits. Consequently, the research focus is now shifted to **mitigating high-density contention and optimizing airtime allocation for voice and video streams**.
+
+2. **Refinement of the Experimental Methodology:**
+   - *Initial Plan (A1):* Proposed evaluating simple fixed contention window modifications.
+   - *Revised Scope (A3):* Having established a validated baseline reproduction in **ns-3.48**, the project will evaluate dynamic adaptive contention window algorithms (or dynamic $AIFSN$ adjustments) where the AP dynamically updates QBSS parameters based on active station counts ($N$), directly addressing the hotspot scalability issue highlighted in Section V of the paper.
+
 ---
 
 ## 5. Summary & Conclusion
