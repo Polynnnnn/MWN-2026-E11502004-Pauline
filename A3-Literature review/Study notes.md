@@ -40,4 +40,20 @@ To get these results, I set up a custom simulation script in **ns-3.48**. Here i
 To make sure the results were reliable and accurate, I wrote a Bash script (`run_density_experiment.sh`) to run the simulation **5 times with different random seeds** for every station count ($N$). Then, I averaged the results across all 5 runs.
 
 ---
+## 3. My Simulation Results
 
+Here are the final average throughput values (in Mbps) that I got from my ns-3 runs:
+
+| Stations ($N$) | AC_VO (Voice) | AC_VI (Video) | AC_BE (Best Effort) | AC_BK (Background) |
+| :---: | :---: | :---: | :---: | :---: |
+| **1** | 0.9992 Mbps | 0.9992 Mbps | 0.9992 Mbps | 0.9989 Mbps |
+| **2** | 1.9991 Mbps | 1.9991 Mbps | 1.9990 Mbps | 1.9986 Mbps |
+| **3** | 2.9985 Mbps | 2.9986 Mbps | 2.9992 Mbps | **0.9110 Mbps** |
+| **4** | 3.9907 Mbps | 3.9887 Mbps | **1.3191 Mbps** | 0.3143 Mbps |
+| **5** | 4.9206 Mbps | 4.9146 Mbps | 0.3716 Mbps | 0.1687 Mbps |
+| **6** | 5.7573 Mbps | 5.7820 Mbps | 0.3207 Mbps | 0.1608 Mbps |
+| **8** | 6.2817 Mbps | 5.7496 Mbps | 0.1943 Mbps | 0.1095 Mbps |
+| **12** | 6.1534 Mbps | 5.7312 Mbps | 0.2238 Mbps | 0.1116 Mbps |
+| **16** | 6.4255 Mbps | 5.6523 Mbps | 0.0815 Mbps | 0.0458 Mbps |
+
+---
