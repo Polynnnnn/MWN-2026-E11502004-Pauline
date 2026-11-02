@@ -77,6 +77,17 @@ My graph matches the curves and behavior described by Mangold et al. perfectly:
 ### Small Differences & Explanations:
 - The total combined throughput of the network levels off at around **12.1 Mbps** in my simulation. This is completely expected because 802.11a at 24 Mbps PHY speed has overhead costs (like packet headers, ACKs, and guard intervals) in ns-3.48.
 
+```mermaid
+xychart-beta
+    title "Throughput per AC vs Station Count"
+    x-axis [N=1, N=2, N=3, N=4, N=5, N=6, N=7, N=8, N=9, N=10, N=11, N=12, N=14, N=16]
+    y-axis "Throughput (Mbps)" 0 --> 7
+    line "AC_VO (Voice)" [1.00, 2.00, 3.00, 3.99, 4.92, 5.76, 6.11, 6.28, 6.50, 6.32, 6.26, 6.15, 6.20, 6.43]
+    line "AC_VI (Video)" [1.00, 2.00, 3.00, 3.99, 4.92, 5.78, 5.61, 5.75, 5.64, 5.71, 5.55, 5.73, 5.48, 5.65]
+    line "AC_BE (Best Effort)" [1.00, 2.00, 3.00, 1.32, 0.37, 0.32, 0.23, 0.19, 0.14, 0.14, 0.14, 0.22, 0.14, 0.08]
+    line "AC_BK (Background)" [1.00, 2.00, 0.91, 0.31, 0.17, 0.16, 0.12, 0.11, 0.08, 0.07, 0.08, 0.11, 0.08, 0.05]
+```
+
 ---
 
 ## 5. Summary & Conclusion
