@@ -3,7 +3,7 @@
 ---
 ---
 
-## 1. Introduction & Goal Paper 1
+## 1. Introduction & Goal & Overview
 
 ### 1. Problem
 Wireless Local Area Networks (WLANs) originally relied on the Distributed Coordination Function (DCF), which operates as a best-effort medium access protocol. Because DCF treats all data packets equally regardless of their content or timing constraints, real-time applications such as Voice over IP (VoIP) and interactive video streaming must contend for channel access on equal terms with low-priority background data transfers.
