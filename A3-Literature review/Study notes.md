@@ -3,7 +3,7 @@
 ---
 ---
 
-## 1. Introduction & Goal
+## 1. Introduction & Goal Paper 1
 
 ### 1. Problem
 Wireless Local Area Networks (WLANs) originally relied on the Distributed Coordination Function (DCF), which operates as a best-effort medium access protocol. Because DCF treats all data packets equally regardless of their content or timing constraints, real-time applications such as Voice over IP (VoIP) and interactive video streaming must contend for channel access on equal terms with low-priority background data transfers.
@@ -115,24 +115,64 @@ My updated simulation results demonstrate the key EDCA QoS principles shown in M
 - **Similarity:** The simulation correctly reproduces the step-by-step priority ranking ($AC\_VO > AC\_VI > AC\_BE > AC\_BK$) and proves that EDCA protects high-priority voice traffic when the network becomes crowded.
 - **Minor Difference:** In the original 2003 paper's analytical curves, lower priorities fell faster toward zero because of ideal collision assumptions. In **ns-3.48**, the internal packet queuing and MAC retry mechanisms smooth out frame drops, allowing $AC\_BE$ and $AC\_BK$ to retain minor residual throughput while voice traffic continues to grow.
 
-### What Changed & Why
-Based on the analysis of Mangold et al. (2003) and the reproduction of Figure 9 in ns-3.48, the scope and direction of the project proposal (A1) have been revised as follows:
+---
 
-1. **Shift in Core Research Problem:**
-   - *Initial Plan (A1):* Focused broadly on measuring average throughput degradation as network density increases.
-   - *Revised Scope (A3):* The reproduction demonstrates that under default EDCA settings, high station density forces lower priorities ($AC\_BE, AC\_BK$) into severe throttling while high-priority traffic ($AC\_VO$) experiences high contention due to its narrow $CW_{min}=3, CW_{max}=7$ limits. Consequently, the research focus is now shifted to **mitigating high-density contention and optimizing airtime allocation for voice and video streams**.
+## 5. Review of Paper 2: Xiao (2005)
 
-2. **Refinement of the Experimental Methodology:**
-   - *Initial Plan (A1):* Proposed evaluating simple fixed contention window modifications.
-   - *Revised Scope (A3):* Having established a validated baseline reproduction in **ns-3.48**, the project will evaluate dynamic adaptive contention window algorithms (or dynamic $AIFSN$ adjustments) where the AP dynamically updates QBSS parameters based on active station counts ($N$), directly addressing the hotspot scalability issue highlighted in Section V of the paper.
+### 1. Problem, Importance, and Challenges
+- **Problem:** Mangold et al. evaluated EDCA primarily through stochastic event-driven simulations. However, simulation alone does not provide closed-form equations explaining *how* individual EDCA parameters ($AIFSN, CW_{min}, CW_{max}$) mathematically govern transmission probabilities and collision dynamics.
+- **Importance:** Yang Xiao's paper (*"Performance Analysis of Priority Schemes for IEEE 802.11e Wireless LANs,"* IEEE TWC 2005) established the first rigorous multi-dimensional Markov chain model for 802.11e EDCA under saturation. This analytical model allows researchers to predict exact throughput limits without running long simulations.
+- **Challenges:** Modeling EDCA is significantly more complex than Bianchi's 2000 DCF model because different Access Categories have distinct arbitration inter-frame spaces ($AIFS$). This means backoff counters for lower-priority categories freeze while higher-priority categories are actively down-counting or transmitting.
+
+### 2. System Model (Xiao 2005)
+- **Environment:** Single-hop Infrastructure QBSS with $N$ active stations under continuous queue saturation (every station's MAC queue always contains frames awaiting transmission).
+- **Inputs:**
+  - Multi-dimensional discrete-time Markov chain modeling backoff state $(s_{i}(t), b_{i}(t))$ for each AC $i \in \{VO, VI, BE, BK\}$.
+  - Input parameters per AC: $CW_{min}[i]$, $CW_{max}[i]$, $AIFSN[i]$, frame retry limits $m_i$, and payload length.
+  - Transmission probability $\tau_i$ and conditional collision probability $p_i$ for each AC.
+- **Outputs & Performance Metrics:**
+  - Normalized saturation throughput per AC ($S_i$).
+  - Frame delivery delay and frame drop probability due to retry limits ($P_{drop}$).
+
+### 3. Key Analytical Results & Findings
+- **Dominance of $CW_{min}$ vs. $AIFSN$:** Xiao's mathematical derivations proved that $CW_{min}$ is the most powerful parameter for short-term priority differentiation, whereas $AIFSN$ acts as a long-term barrier to channel access.
+- **Mathematical Confirmation of Collision Collapse:** Xiao's equations demonstrated that setting $CW_{min}=3$ for $AC\_VO$ guarantees early channel access when $N$ is small. However, as $N > 5$, the probability of two or more voice stations selecting the exact same backoff slot approaches 100%, causing exponential collision rates. This provides exact theoretical backing for the performance saturation observed in Mangold's Figure 9 and in my ns-3.48 simulation.
 
 ---
 
-## 5. Summary & Conclusion
+## 6. Synthesis & Comparison of Reviewed Papers
 
-I successfully set up and verified the IEEE 802.11e EDCA protocol parameters in **ns-3.48**. The simulation script sweeps station density from 1 to 16 stations and confirms that **increasing station count forces lower-priority traffic to yield bandwidth to protect voice and video applications**.
+| Feature / Metric | Paper 1: Mangold et al. (2003) | Paper 2: Xiao (2005) |
+| :--- | :--- | :--- |
+| **Primary Approach** | Stochastic Event-Driven Simulation (ns-2 / custom) | Analytical Markov Chain Modeling |
+| **Focus Area** | Empirical EDCA/HCCA throughput & delay evaluation | Mathematical derivation of transmission ($\tau$) and collision ($p$) probabilities |
+| **Station Density Scope** | Evaluates $N=1$ to $16$ stations | Evaluates theoretical scaling up to $N=50$ stations |
+| **High-Density Finding** | Shows $AC\_VO$ taking over bandwidth while lower ACs degrade | Mathematically proves small $CW_{min}=3$ causes exponential collision escalation at high $N$ |
 
-This curve serves as my validated baseline for the project.
+---
+
+## 7. Revision to Project Proposal (A1)
+
+### What Changed & Why
+Based on the combined analysis of Mangold et al. (2003), Xiao (2005), and the reproduction of Figure 9 in ns-3.48, the scope and direction of the project proposal (A1) have been revised as follows:
+
+1. **Shift in Core Research Problem:**
+   - *Initial Plan (A1):* Focused broadly on measuring average throughput degradation as network density increases under standard DCF/EDCA.
+   - *Revised Scope (A3):* The reproduction and theoretical model demonstrate that default EDCA settings create severe contention collapse in dense environments because $AC\_VO$'s small $CW_{min}=3$ bounds trigger high collision rates. Consequently, the research focus is now shifted to **mitigating high-density contention and optimizing airtime allocation for voice and video streams**.
+
+2. **Refinement of the Experimental Methodology:**
+   - *Initial Plan (A1):* Proposed evaluating simple fixed contention window modifications.
+   - *Revised Scope (A3):* Having established a validated baseline reproduction in **ns-3.48**, the project will evaluate dynamic adaptive contention window algorithms (such as Dynamic Adaptive Contention Window - DACW) where the Access Point dynamically inflates $CW_{min}[AC\_VO]$ from 3 up to 15 when active station count $N \ge 6$. This directly addresses the hotspot scalability issue highlighted in both papers.
+
+---
+
+## 8. Summary & Conclusion
+
+I successfully reviewed both Mangold et al. (2003) and Xiao (2005), and set up and verified the IEEE 802.11e EDCA protocol parameters in **ns-3.48**. The simulation script sweeps station density from 1 to 16 stations and confirms that **increasing station count forces lower-priority traffic to yield bandwidth to protect voice and video applications**, while also revealing the collision risks of static EDCA parameterization.
+
+This reproduced curve serves as my validated baseline for the final project.
+
+
 
 
 
