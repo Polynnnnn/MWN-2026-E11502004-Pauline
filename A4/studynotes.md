@@ -81,14 +81,14 @@ To repeat Experiment 1 and Experiment 2 in `ns-3.48`, run the simulation script 
 # Experiment 1: Baseline EDCA throughput without RTS/CTS
 for n in $(seq 1 16); do
   for run in $(seq 1 10); do
-    ./ns3 run "a4-edca-reproduction --nStations=$n --rtsCts=false --RngRun=$run"
+    ./ns3 run "scratch/edca-density-experiment --nStations=$n --rtsCts=false --RngRun=$run"
   done
 done
 
 # Experiment 2: EDCA end-to-end access delay with RTS/CTS enabled
 for n in $(seq 1 16); do
   for run in $(seq 1 10); do
-    ./ns3 run "a4-edca-reproduction --nStations=$n --rtsCts=true --RngRun=$run"
+    ./ns3 run "scratch/edca-exp2-delay-rts --nStations=$n --rtsCts=true --RngRun=$run"
   done
 done
 ```
